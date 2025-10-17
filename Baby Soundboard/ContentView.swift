@@ -73,7 +73,7 @@ struct ContentView: View {
     @StateObject private var soundPlayer = SoundPlayer()
     @State private var showingSettings = false
     @State private var showingPaywall = false
-    @State private var isOnboardingComplete = false // Always show onboarding for now
+    @State private var isOnboardingComplete = UserDefaults.standard.bool(forKey: "hasCompletedOnboarding")
     @AppStorage("defaultVolume") private var defaultVolume: Double = 20
     
     private func getSoundDisplayName(_ soundName: String) -> String {
