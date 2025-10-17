@@ -15,14 +15,10 @@ class SoundPlayer: ObservableObject {
     private var stopTimer: Timer?
     private var countdownTimer: Timer?
     
-    // Background monitoring
-    private var backgroundTaskIdentifier: UIBackgroundTaskIdentifier = .invalid
-    
     init() {
         setupAudioSession()
         setupAudioSessionNotifications()
         setupRemoteCommandCenter()
-        setupAppLifecycleNotifications()
         loadVolumeFromUserDefaults()
     }
     
@@ -30,9 +26,9 @@ class SoundPlayer: ObservableObject {
         do {
             let audioSession = AVAudioSession.sharedInstance()
             
-            // Configure for background audio playback with specific mode
-            try audioSession.setCategory(.playback, mode: .default, options: [.allowBluetooth, .allowBluetoothA2DP])
-            try audioSession.setActive(true, options: [])
+            // Configure for background audio playback with proper category and options
+            try audioSession.setCategory(.playback, mode: .default, options: [])
+            try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
             
             // Enable remote control events
             UIApplication.shared.beginReceivingRemoteControlEvents()
@@ -40,7 +36,7 @@ class SoundPlayer: ObservableObject {
             print("Audio session configured for background playback")
             print("Audio session category: \(audioSession.category)")
             print("Audio session mode: \(audioSession.mode)")
-            print("Audio session is active: \(!audioSession.isOtherAudioPlaying)")
+            print("Audio session is active: \(audioSession.isOtherAudioPlaying)")
             print("Background modes enabled: \(Bundle.main.object(forInfoDictionaryKey: "UIBackgroundModes") ?? "None")")
         } catch {
             print("Failed to set up audio session: \(error)")
@@ -174,29 +170,6 @@ class SoundPlayer: ObservableObject {
         )
     }
     
-    private func setupAppLifecycleNotifications() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(appDidEnterBackground),
-            name: UIApplication.didEnterBackgroundNotification,
-            object: nil
-        )
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(appWillEnterForeground),
-            name: UIApplication.willEnterForegroundNotification,
-            object: nil
-        )
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(appDidBecomeActive),
-            name: UIApplication.didBecomeActiveNotification,
-            object: nil
-        )
-    }
-    
     @objc private func handleAudioSessionInterruption(notification: Notification) {
         guard let userInfo = notification.userInfo,
               let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
@@ -248,62 +221,6 @@ class SoundPlayer: ObservableObject {
         }
     }
     
-    @objc private func appDidEnterBackground() {
-        print("App entered background - audio playing: \(isPlaying)")
-        
-        if isPlaying {
-            // Start background task to keep audio alive
-            backgroundTaskIdentifier = UIApplication.shared.beginBackgroundTask(withName: "AudioPlayback") {
-                self.endBackgroundTask()
-            }
-            
-            // Ensure audio session stays active
-            do {
-                let audioSession = AVAudioSession.sharedInstance()
-                try audioSession.setActive(true, options: [])
-                print("Audio session reactivated for background")
-                
-                // Ensure player is still playing
-                if let player = audioPlayer, !player.isPlaying {
-                    player.play()
-                    print("Restarted audio player in background")
-                }
-            } catch {
-                print("Failed to maintain audio session in background: \(error)")
-            }
-        }
-    }
-    
-    @objc private func appWillEnterForeground() {
-        print("App will enter foreground")
-        endBackgroundTask()
-    }
-    
-    @objc private func appDidBecomeActive() {
-        print("App became active - audio playing: \(isPlaying)")
-        
-        // Reactivate audio session when returning to foreground
-        do {
-            let audioSession = AVAudioSession.sharedInstance()
-            try audioSession.setActive(true, options: [])
-            
-            // Check if we should be playing but aren't
-            if isPlaying && !(audioPlayer?.isPlaying ?? false) {
-                audioPlayer?.play()
-                print("Resumed audio playback when app became active")
-            }
-        } catch {
-            print("Failed to reactivate audio session: \(error)")
-        }
-    }
-    
-    private func endBackgroundTask() {
-        if backgroundTaskIdentifier != .invalid {
-            UIApplication.shared.endBackgroundTask(backgroundTaskIdentifier)
-            backgroundTaskIdentifier = .invalid
-        }
-    }
-    
     private func loadVolumeFromUserDefaults() {
         let savedVolume = UserDefaults.standard.double(forKey: "defaultVolume")
         if savedVolume == 0 && !UserDefaults.standard.bool(forKey: "hasLaunchedBefore") {
@@ -331,12 +248,11 @@ class SoundPlayer: ObservableObject {
             let audioSession = AVAudioSession.sharedInstance()
             
             // Ensure audio session is configured and active for background playback
-            try audioSession.setCategory(.playback, mode: .default, options: [.allowBluetooth, .allowBluetoothA2DP])
-            try audioSession.setActive(true, options: [])
+            try audioSession.setCategory(.playback, mode: .default, options: [])
+            try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
             
             // Stop any currently playing audio
             audioPlayer?.stop()
-            endBackgroundTask() // End any previous background task
             
             // Create and configure new audio player
             audioPlayer = try AVAudioPlayer(contentsOf: url)
@@ -356,14 +272,7 @@ class SoundPlayer: ObservableObject {
                 print("Started playing \(soundName) in background-capable mode")
                 print("Audio player is playing: \(audioPlayer?.isPlaying ?? false)")
                 print("Audio session category: \(audioSession.category)")
-                print("Audio session active: \(!audioSession.isOtherAudioPlaying)")
-                
-                // If we're in background, start background task immediately
-                if UIApplication.shared.applicationState == .background {
-                    backgroundTaskIdentifier = UIApplication.shared.beginBackgroundTask(withName: "AudioPlayback") {
-                        self.endBackgroundTask()
-                    }
-                }
+                print("Audio session active: \(audioSession.isOtherAudioPlaying == false)")
             } else {
                 print("Failed to start audio playback")
             }
@@ -378,12 +287,9 @@ class SoundPlayer: ObservableObject {
         isPlaying = false
         currentSound = nil
         cancelTimer()
-        endBackgroundTask()
         
         // Clear Now Playing info
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nil
-        
-        print("Audio stopped and background task ended")
     }
     
     func scheduleStop(after duration: TimeInterval) {
@@ -438,7 +344,5 @@ class SoundPlayer: ObservableObject {
     deinit {
         audioPlayer?.stop()
         cancelTimer()
-        endBackgroundTask()
-        NotificationCenter.default.removeObserver(self)
     }
 }
