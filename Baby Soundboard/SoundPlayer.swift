@@ -26,9 +26,9 @@ class SoundPlayer: ObservableObject {
         do {
             let audioSession = AVAudioSession.sharedInstance()
             
-            // Configure for background audio playback as music app
-            try audioSession.setCategory(.playback, mode: .default, options: [.duckOthers])
-            try audioSession.setActive(true)
+            // Configure for background audio playback with proper category and options
+            try audioSession.setCategory(.playback, mode: .default, options: [])
+            try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
             
             // Enable remote control events
             UIApplication.shared.beginReceivingRemoteControlEvents()
@@ -184,9 +184,17 @@ class SoundPlayer: ObservableObject {
         case .ended:
             // Audio session interruption ended
             do {
-                try AVAudioSession.sharedInstance().setActive(true)
-                if isPlaying {
-                    audioPlayer?.play()
+                try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
+                try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
+                
+                // Check if we should resume playback
+                if let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt {
+                    let options = AVAudioSession.InterruptionOptions(rawValue: optionsValue)
+                    if options.contains(.shouldResume) && isPlaying {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                            self.audioPlayer?.play()
+                        }
+                    }
                 }
             } catch {
                 print("Error reactivating audio session: \(error)")
@@ -239,9 +247,9 @@ class SoundPlayer: ObservableObject {
         do {
             let audioSession = AVAudioSession.sharedInstance()
             
-            // Ensure audio session is configured and active
-            try audioSession.setCategory(.playback, mode: .default, options: [.duckOthers])
-            try audioSession.setActive(true)
+            // Ensure audio session is configured and active for background playback
+            try audioSession.setCategory(.playback, mode: .default, options: [])
+            try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
             
             // Stop any currently playing audio
             audioPlayer?.stop()
@@ -251,6 +259,7 @@ class SoundPlayer: ObservableObject {
             audioPlayer?.numberOfLoops = -1  // Loop indefinitely
             audioPlayer?.volume = defaultVolume
             
+            // Prepare to play
             audioPlayer?.prepareToPlay()
             
             // Start playback
@@ -262,6 +271,8 @@ class SoundPlayer: ObservableObject {
                 updateNowPlayingInfo(soundName: soundName)
                 print("Started playing \(soundName) in background-capable mode")
                 print("Audio player is playing: \(audioPlayer?.isPlaying ?? false)")
+                print("Audio session category: \(audioSession.category)")
+                print("Audio session active: \(audioSession.isOtherAudioPlaying == false)")
             } else {
                 print("Failed to start audio playback")
             }
