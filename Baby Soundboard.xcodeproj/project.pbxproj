@@ -6,6 +6,27 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		85BCB35B2E1FF0B8002BD7BF /* Quicksand-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85BCB3592E1FF0B8002BD7BF /* Quicksand-Regular.ttf */; };
+		85BCB35C2E1FF0B8002BD7BF /* Quicksand-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85BCB3562E1FF0B8002BD7BF /* Quicksand-Bold.ttf */; };
+		85BCB35D2E1FF0B8002BD7BF /* Quicksand-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85BCB3582E1FF0B8002BD7BF /* Quicksand-Medium.ttf */; };
+		85BCB35E2E1FF0B8002BD7BF /* Quicksand-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85BCB35A2E1FF0B8002BD7BF /* Quicksand-SemiBold.ttf */; };
+		85BCB35F2E1FF0B8002BD7BF /* Quicksand-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85BCB3572E1FF0B8002BD7BF /* Quicksand-Light.ttf */; };
+		85BCB3602E1FF0B8002BD7BF /* Quicksand-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85BCB3592E1FF0B8002BD7BF /* Quicksand-Regular.ttf */; };
+		85BCB3612E1FF0B8002BD7BF /* Quicksand-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85BCB3562E1FF0B8002BD7BF /* Quicksand-Bold.ttf */; };
+		85BCB3622E1FF0B8002BD7BF /* Quicksand-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85BCB3582E1FF0B8002BD7BF /* Quicksand-Medium.ttf */; };
+		85BCB3632E1FF0B8002BD7BF /* Quicksand-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85BCB35A2E1FF0B8002BD7BF /* Quicksand-SemiBold.ttf */; };
+		85BCB3642E1FF0B8002BD7BF /* Quicksand-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85BCB3572E1FF0B8002BD7BF /* Quicksand-Light.ttf */; };
+		85BCB3652E1FF0B8002BD7BF /* Quicksand-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85BCB3592E1FF0B8002BD7BF /* Quicksand-Regular.ttf */; };
+		85BCB3662E1FF0B8002BD7BF /* Quicksand-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85BCB3562E1FF0B8002BD7BF /* Quicksand-Bold.ttf */; };
+		85BCB3672E1FF0B8002BD7BF /* Quicksand-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85BCB3582E1FF0B8002BD7BF /* Quicksand-Medium.ttf */; };
+		85BCB3682E1FF0B8002BD7BF /* Quicksand-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85BCB35A2E1FF0B8002BD7BF /* Quicksand-SemiBold.ttf */; };
+		85BCB3692E1FF0B8002BD7BF /* Quicksand-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85BCB3572E1FF0B8002BD7BF /* Quicksand-Light.ttf */; };
+		85BCB3742E1FFA39002BD7BF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85BCB3732E1FFA39002BD7BF /* LaunchScreen.storyboard */; };
+		85BCB3752E1FFA39002BD7BF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85BCB3732E1FFA39002BD7BF /* LaunchScreen.storyboard */; };
+		85BCB3762E1FFA39002BD7BF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85BCB3732E1FFA39002BD7BF /* LaunchScreen.storyboard */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		8562B34B2E1BF5D20034EFBB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,11 +48,30 @@
 		8562B33D2E1BF5D10034EFBB /* Baby Soundboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Baby Soundboard.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8562B34A2E1BF5D20034EFBB /* Baby SoundboardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Baby SoundboardTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8562B3542E1BF5D20034EFBB /* Baby SoundboardUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Baby SoundboardUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		85BCB3562E1FF0B8002BD7BF /* Quicksand-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-Bold.ttf"; sourceTree = "<group>"; };
+		85BCB3572E1FF0B8002BD7BF /* Quicksand-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-Light.ttf"; sourceTree = "<group>"; };
+		85BCB3582E1FF0B8002BD7BF /* Quicksand-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-Medium.ttf"; sourceTree = "<group>"; };
+		85BCB3592E1FF0B8002BD7BF /* Quicksand-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-Regular.ttf"; sourceTree = "<group>"; };
+		85BCB35A2E1FF0B8002BD7BF /* Quicksand-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-SemiBold.ttf"; sourceTree = "<group>"; };
+		85BCB3732E1FFA39002BD7BF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		8562B36E2E1C00520034EFBB /* Exceptions for "Baby Soundboard" folder in "Baby Soundboard" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 8562B33C2E1BF5D10034EFBB /* Baby Soundboard */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		8562B33F2E1BF5D10034EFBB /* Baby Soundboard */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				8562B36E2E1C00520034EFBB /* Exceptions for "Baby Soundboard" folder in "Baby Soundboard" target */,
+			);
 			path = "Baby Soundboard";
 			sourceTree = "<group>";
 		};
@@ -75,6 +115,12 @@
 		8562B3342E1BF5D10034EFBB = {
 			isa = PBXGroup;
 			children = (
+				85BCB3732E1FFA39002BD7BF /* LaunchScreen.storyboard */,
+				85BCB3562E1FF0B8002BD7BF /* Quicksand-Bold.ttf */,
+				85BCB3572E1FF0B8002BD7BF /* Quicksand-Light.ttf */,
+				85BCB3582E1FF0B8002BD7BF /* Quicksand-Medium.ttf */,
+				85BCB3592E1FF0B8002BD7BF /* Quicksand-Regular.ttf */,
+				85BCB35A2E1FF0B8002BD7BF /* Quicksand-SemiBold.ttf */,
 				8562B33F2E1BF5D10034EFBB /* Baby Soundboard */,
 				8562B34D2E1BF5D20034EFBB /* Baby SoundboardTests */,
 				8562B3572E1BF5D20034EFBB /* Baby SoundboardUITests */,
@@ -212,6 +258,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85BCB35B2E1FF0B8002BD7BF /* Quicksand-Regular.ttf in Resources */,
+				85BCB35C2E1FF0B8002BD7BF /* Quicksand-Bold.ttf in Resources */,
+				85BCB35D2E1FF0B8002BD7BF /* Quicksand-Medium.ttf in Resources */,
+				85BCB35E2E1FF0B8002BD7BF /* Quicksand-SemiBold.ttf in Resources */,
+				85BCB35F2E1FF0B8002BD7BF /* Quicksand-Light.ttf in Resources */,
+				85BCB3752E1FFA39002BD7BF /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,6 +271,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85BCB3602E1FF0B8002BD7BF /* Quicksand-Regular.ttf in Resources */,
+				85BCB3612E1FF0B8002BD7BF /* Quicksand-Bold.ttf in Resources */,
+				85BCB3622E1FF0B8002BD7BF /* Quicksand-Medium.ttf in Resources */,
+				85BCB3762E1FFA39002BD7BF /* LaunchScreen.storyboard in Resources */,
+				85BCB3632E1FF0B8002BD7BF /* Quicksand-SemiBold.ttf in Resources */,
+				85BCB3642E1FF0B8002BD7BF /* Quicksand-Light.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,6 +284,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85BCB3652E1FF0B8002BD7BF /* Quicksand-Regular.ttf in Resources */,
+				85BCB3662E1FF0B8002BD7BF /* Quicksand-Bold.ttf in Resources */,
+				85BCB3672E1FF0B8002BD7BF /* Quicksand-Medium.ttf in Resources */,
+				85BCB3742E1FFA39002BD7BF /* LaunchScreen.storyboard in Resources */,
+				85BCB3682E1FF0B8002BD7BF /* Quicksand-SemiBold.ttf in Resources */,
+				85BCB3692E1FF0B8002BD7BF /* Quicksand-Light.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,6 +459,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 54Z3WMNQ78;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -422,6 +487,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 54Z3WMNQ78;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -448,10 +514,12 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 54Z3WMNQ78;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.parezem.Baby-SoundboardTests";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = "moonnest-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -466,10 +534,12 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 54Z3WMNQ78;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.parezem.Baby-SoundboardTests";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = "moonnest-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
