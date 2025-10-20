@@ -263,7 +263,22 @@ class SoundPlayer: ObservableObject {
             audioPlayer?.volume = defaultVolume
             
             // Prepare to play
-            audioPlayer?.prepareToPlay()
+            let prepareSuccess = audioPlayer?.prepareToPlay() ?? false
+            print("Audio prepare success: \(prepareSuccess)")
+            
+            // If prepare fails, try again after session activation
+            if !prepareSuccess {
+                print("Initial prepare failed, retrying after session activation")
+            }
+            
+            // Activate session immediately before play (critical for background audio)
+            try audioSession.setActive(true, options: [])
+            
+            // Retry prepare if it failed initially
+            if !prepareSuccess {
+                let retryPrepare = audioPlayer?.prepareToPlay() ?? false
+                print("Retry prepare success: \(retryPrepare)")
+            }
             
             // Start playback
             let success = audioPlayer?.play() ?? false
