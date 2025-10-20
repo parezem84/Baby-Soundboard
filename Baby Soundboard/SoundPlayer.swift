@@ -251,6 +251,9 @@ class SoundPlayer: ObservableObject {
             try audioSession.setCategory(.playback, mode: .default, options: [])
             try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
             
+            // Re-establish remote control events (critical for background audio)
+            UIApplication.shared.beginReceivingRemoteControlEvents()
+            
             // Stop any currently playing audio
             audioPlayer?.stop()
             
