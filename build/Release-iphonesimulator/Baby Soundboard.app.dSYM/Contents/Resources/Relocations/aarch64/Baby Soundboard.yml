@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/build/Release-iphonesimulator/Baby Soundboard.app/Baby Soundboard'
+relocations:     []
+...
