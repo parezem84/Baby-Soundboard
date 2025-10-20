@@ -1,0 +1,46 @@
+{
+  "" : {
+    "const-values" : "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/build/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/Baby Soundboard-primary.swiftconstvalues",
+    "dependencies" : "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/build/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/Baby Soundboard-primary.d",
+    "diagnostics" : "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/build/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/Baby Soundboard-primary.dia",
+    "emit-module-dependencies" : "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/build/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/Baby Soundboard-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/build/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/Baby Soundboard-primary-emit-module.dia",
+    "pch" : "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/build/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/Baby Soundboard-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/build/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/Baby Soundboard-primary.swiftdeps"
+  },
+  "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/Baby Soundboard/Baby_SoundboardApp.swift" : {
+    "index-unit-output-path" : "/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/Baby_SoundboardApp.o",
+    "llvm-bc" : "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/build/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/Baby_SoundboardApp.bc",
+    "object" : "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/build/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/Baby_SoundboardApp.o"
+  },
+  "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/Baby Soundboard/ContentView.swift" : {
+    "index-unit-output-path" : "/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/ContentView.o",
+    "llvm-bc" : "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/build/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/ContentView.bc",
+    "object" : "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/build/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/ContentView.o"
+  },
+  "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/Baby Soundboard/LaunchScreenView.swift" : {
+    "index-unit-output-path" : "/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/LaunchScreenView.o",
+    "llvm-bc" : "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/build/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/LaunchScreenView.bc",
+    "object" : "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/build/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/LaunchScreenView.o"
+  },
+  "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/Baby Soundboard/OnboardingView.swift" : {
+    "index-unit-output-path" : "/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/OnboardingView.o",
+    "llvm-bc" : "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/build/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/OnboardingView.bc",
+    "object" : "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/build/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/OnboardingView.o"
+  },
+  "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/Baby Soundboard/PaywallView.swift" : {
+    "index-unit-output-path" : "/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/PaywallView.o",
+    "llvm-bc" : "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/build/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/PaywallView.bc",
+    "object" : "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/build/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/PaywallView.o"
+  },
+  "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/Baby Soundboard/SoundPlayer.swift" : {
+    "index-unit-output-path" : "/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/SoundPlayer.o",
+    "llvm-bc" : "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/build/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/SoundPlayer.bc",
+    "object" : "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/build/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/SoundPlayer.o"
+  },
+  "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/build/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "index-unit-output-path" : "/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/build/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/michalparizek/Documents/Baby Soundboard/Baby Soundboard/build/Baby Soundboard.build/Release-iphonesimulator/Baby Soundboard.build/Objects-normal/arm64/GeneratedAssetSymbols.o"
+  }
+}

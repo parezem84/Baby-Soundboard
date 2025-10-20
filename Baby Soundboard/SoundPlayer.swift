@@ -26,8 +26,8 @@ class SoundPlayer: ObservableObject {
         do {
             let audioSession = AVAudioSession.sharedInstance()
             
-            // Configure for background audio playback with proper category and options
-            try audioSession.setCategory(.playback, mode: .default, options: [])
+            // Configure for background audio playback with recommended options
+            try audioSession.setCategory(.playback, mode: .default, options: [.mixWithOthers, .allowAirPlay])
             try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
             
             // Enable remote control events
@@ -184,7 +184,7 @@ class SoundPlayer: ObservableObject {
         case .ended:
             // Audio session interruption ended
             do {
-                try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
+                try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [.mixWithOthers, .allowAirPlay])
                 try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
                 
                 // Check if we should resume playback
@@ -248,7 +248,7 @@ class SoundPlayer: ObservableObject {
             let audioSession = AVAudioSession.sharedInstance()
             
             // Ensure audio session is configured and active for background playback
-            try audioSession.setCategory(.playback, mode: .default, options: [])
+            try audioSession.setCategory(.playback, mode: .default, options: [.mixWithOthers, .allowAirPlay])
             try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
             
             // Stop any currently playing audio
