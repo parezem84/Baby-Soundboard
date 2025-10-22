@@ -77,8 +77,8 @@ struct OnboardingView: View {
                             currentPage += 1
                         }
                     } else {
-                        // Show paywall before completing onboarding
-                        showPaywall = true
+                        // Complete onboarding directly (paywall hidden for v1 launch)
+                        completeOnboarding()
                     }
                 }) {
                     Text(onboardingPages[currentPage].buttonText)
@@ -117,13 +117,14 @@ struct OnboardingView: View {
                     }
                 }
         )
-        .sheet(isPresented: $showPaywall) {
-            PaywallView()
-                .onDisappear {
-                    // Complete onboarding when paywall is dismissed
-                    completeOnboarding()
-                }
-        }
+        // Paywall sheet hidden for v1 launch
+        // .sheet(isPresented: $showPaywall) {
+        //     PaywallView()
+        //         .onDisappear {
+        //             // Complete onboarding when paywall is dismissed
+        //             completeOnboarding()
+        //         }
+        // }
     }
     
     private func completeOnboarding() {
