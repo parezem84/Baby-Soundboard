@@ -24,6 +24,18 @@ struct Baby_SoundboardApp: App {
                     }
             } else {
                 ContentView()
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
+                        print("🎵 MOONNEST: App entered background")
+                    }
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                        print("🎵 MOONNEST: App will enter foreground")
+                    }
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+                        print("🎵 MOONNEST: App became active")
+                    }
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+                        print("🎵 MOONNEST: App will resign active")
+                    }
             }
         }
     }
