@@ -271,8 +271,8 @@ class SoundPlayer: ObservableObject {
                 print("Initial prepare failed, retrying after session activation")
             }
             
-            // Activate session immediately before play (critical for background audio)
-            try audioSession.setActive(true, options: [])
+            // Request audio session control with proper options for background audio
+            try audioSession.setActive(true, options: [.notifyOthersOnDeactivation])
             
             // Retry prepare if it failed initially
             if !prepareSuccess {
