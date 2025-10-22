@@ -14,12 +14,16 @@ class SoundPlayer: ObservableObject {
     @Published var timeRemaining: TimeInterval = 0
     private var stopTimer: Timer?
     private var countdownTimer: Timer?
+    private var audioStateMonitor: Timer?
     
     init() {
+        NSLog("MOONNEST_LOG: SoundPlayer initialized - logging test")
+        print("MOONNEST_LOG: SoundPlayer initialized - logging test")
         setupAudioSession()
         setupAudioSessionNotifications()
         setupRemoteCommandCenter()
         loadVolumeFromUserDefaults()
+        setupBackgroundAudioMonitoring()
     }
     
     private func setupAudioSession() {
@@ -154,6 +158,55 @@ class SoundPlayer: ObservableObject {
         return soundDict[soundName] ?? soundName
     }
     
+    private func setupBackgroundAudioMonitoring() {
+        NotificationCenter.default.addObserver(
+            forName: UIApplication.didEnterBackgroundNotification,
+            object: nil,
+            queue: .main
+        ) { _ in
+            print("🎵 MOONNEST_LOG: App entered background - checking audio state")
+            print("🎵 MOONNEST_LOG: Audio player exists: \(self.audioPlayer != nil)")
+            print("🎵 MOONNEST_LOG: Audio player isPlaying: \(self.audioPlayer?.isPlaying ?? false)")
+            print("🎵 MOONNEST_LOG: Published isPlaying: \(self.isPlaying)")
+            
+            // CRITICAL FIX: Reactivate audio session for background playback
+            if self.isPlaying && self.audioPlayer != nil {
+                do {
+                    let session = AVAudioSession.sharedInstance()
+                    print("🎵 MOONNEST_LOG: Reactivating audio session for background...")
+                    
+                    // Ensure background audio configuration
+                    try session.setCategory(.playback, mode: .default, options: [])
+                    try session.setActive(true, options: [.notifyOthersOnDeactivation])
+                    
+                    print("🎵 MOONNEST_LOG: Audio session reactivated successfully")
+                    print("🎵 MOONNEST_LOG: Session category: \(session.category)")
+                    print("🎵 MOONNEST_LOG: Session is now active: \(!session.isOtherAudioPlaying)")
+                    
+                    // Ensure audio player is still playing
+                    if let player = self.audioPlayer, !player.isPlaying {
+                        print("🎵 MOONNEST_LOG: Player stopped, restarting...")
+                        player.play()
+                    }
+                    
+                } catch {
+                    print("🎵 MOONNEST_LOG: ❌ Failed to reactivate audio session: \(error)")
+                }
+            }
+        }
+        
+        NotificationCenter.default.addObserver(
+            forName: UIApplication.willEnterForegroundNotification,
+            object: nil,
+            queue: .main
+        ) { _ in
+            print("🎵 MOONNEST_LOG: App will enter foreground - checking audio state")
+            print("🎵 MOONNEST_LOG: Audio player exists: \(self.audioPlayer != nil)")
+            print("🎵 MOONNEST_LOG: Audio player isPlaying: \(self.audioPlayer?.isPlaying ?? false)")
+            print("🎵 MOONNEST_LOG: Published isPlaying: \(self.isPlaying)")
+        }
+    }
+    
     private func setupAudioSessionNotifications() {
         NotificationCenter.default.addObserver(
             self,
@@ -239,105 +292,140 @@ class SoundPlayer: ObservableObject {
     }
     
     func playSound(_ soundName: String) {
-        print("🎵 MOONNEST: playSound called for \(soundName)")
+        NSLog("MOONNEST_LOG: playSound called for %@", soundName)
+        print("MOONNEST_LOG: playSound called for \(soundName)")
         
         guard let url = Bundle.main.url(forResource: soundName, withExtension: "mp3") else {
-            print("🎵 MOONNEST: ERROR - Could not find sound file: \(soundName).mp3")
+            print("🎵 MOONNEST_LOG: ERROR - Could not find sound file: \(soundName).mp3")
             return
         }
         
-        print("🎵 MOONNEST: Sound file found at \(url)")
+        print("🎵 MOONNEST_LOG: Sound file found at \(url)")
         
         do {
             let audioSession = AVAudioSession.sharedInstance()
-            print("🎵 MOONNEST: Got audio session instance")
+            print("🎵 MOONNEST_LOG: Got audio session instance")
             
             // Check initial session state
-            print("🎵 MOONNEST: Initial session category: \(audioSession.category)")
-            print("🎵 MOONNEST: Initial session mode: \(audioSession.mode)")
-            print("🎵 MOONNEST: Other audio playing: \(audioSession.isOtherAudioPlaying)")
+            print("🎵 MOONNEST_LOG: Initial session category: \(audioSession.category)")
+            print("🎵 MOONNEST_LOG: Initial session mode: \(audioSession.mode)")
+            print("🎵 MOONNEST_LOG: Other audio playing: \(audioSession.isOtherAudioPlaying)")
             
             // Ensure audio session is configured and active for background playback
             try audioSession.setCategory(.playback, mode: .default, options: [])
-            print("🎵 MOONNEST: Audio session category set to playback")
+            print("🎵 MOONNEST_LOG: Audio session category set to playback")
             
             try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
-            print("🎵 MOONNEST: Audio session activated successfully")
+            print("🎵 MOONNEST_LOG: Audio session activated successfully")
             
             // Re-establish remote control events (critical for background audio)
             UIApplication.shared.beginReceivingRemoteControlEvents()
-            print("🎵 MOONNEST: Remote control events enabled")
+            print("🎵 MOONNEST_LOG: Remote control events enabled")
             
             // Stop any currently playing audio
             audioPlayer?.stop()
-            print("🎵 MOONNEST: Stopped previous audio player")
+            print("🎵 MOONNEST_LOG: Stopped previous audio player")
             
             // Create and configure new audio player
             audioPlayer = try AVAudioPlayer(contentsOf: url)
-            print("🎵 MOONNEST: Created new AVAudioPlayer")
+            print("🎵 MOONNEST_LOG: Created new AVAudioPlayer")
             
             audioPlayer?.numberOfLoops = -1  // Loop indefinitely
             audioPlayer?.volume = defaultVolume
-            print("🎵 MOONNEST: Configured player - loops: -1, volume: \(defaultVolume)")
+            print("🎵 MOONNEST_LOG: Configured player - loops: -1, volume: \(defaultVolume)")
             
             // Prepare to play
             let prepareSuccess = audioPlayer?.prepareToPlay() ?? false
-            print("🎵 MOONNEST: Audio prepare success: \(prepareSuccess)")
+            print("🎵 MOONNEST_LOG: Audio prepare success: \(prepareSuccess)")
             
             // If prepare fails, try again after session activation
             if !prepareSuccess {
-                print("🎵 MOONNEST: Initial prepare failed, retrying after session activation")
+                print("🎵 MOONNEST_LOG: Initial prepare failed, retrying after session activation")
                 
                 // Request audio session control with proper options for background audio
                 try audioSession.setActive(true, options: [.notifyOthersOnDeactivation])
-                print("🎵 MOONNEST: Re-activated audio session for retry")
+                print("🎵 MOONNEST_LOG: Re-activated audio session for retry")
                 
                 let retryPrepare = audioPlayer?.prepareToPlay() ?? false
-                print("🎵 MOONNEST: Retry prepare success: \(retryPrepare)")
+                print("🎵 MOONNEST_LOG: Retry prepare success: \(retryPrepare)")
             }
             
             // Start playback
-            print("🎵 MOONNEST: Attempting to start playback...")
+            print("🎵 MOONNEST_LOG: Attempting to start playback...")
             let success = audioPlayer?.play() ?? false
-            print("🎵 MOONNEST: Audio player play() returned: \(success)")
+            print("🎵 MOONNEST_LOG: Audio player play() returned: \(success)")
             
             if success {
                 isPlaying = true
                 currentSound = soundName
                 updateNowPlayingInfo(soundName: soundName)
-                print("🎵 MOONNEST: ✅ Successfully started playing \(soundName)")
-                print("🎵 MOONNEST: Audio player isPlaying: \(audioPlayer?.isPlaying ?? false)")
-                print("🎵 MOONNEST: Final session category: \(audioSession.category)")
-                print("🎵 MOONNEST: Session is active: \(!audioSession.isOtherAudioPlaying)")
+                print("🎵 MOONNEST_LOG: ✅ Successfully started playing \(soundName)")
+                print("🎵 MOONNEST_LOG: Audio player isPlaying: \(audioPlayer?.isPlaying ?? false)")
+                print("🎵 MOONNEST_LOG: Final session category: \(audioSession.category)")
+                print("🎵 MOONNEST_LOG: Session is active: \(!audioSession.isOtherAudioPlaying)")
                 
                 // Additional diagnostics
                 if let player = audioPlayer {
-                    print("🎵 MOONNEST: Player duration: \(player.duration)")
-                    print("🎵 MOONNEST: Player current time: \(player.currentTime)")
-                    print("🎵 MOONNEST: Player number of loops: \(player.numberOfLoops)")
+                    print("🎵 MOONNEST_LOG: Player duration: \(player.duration)")
+                    print("🎵 MOONNEST_LOG: Player current time: \(player.currentTime)")
+                    print("🎵 MOONNEST_LOG: Player number of loops: \(player.numberOfLoops)")
                 }
+                
+                // Start monitoring audio state every second
+                startAudioStateMonitoring()
             } else {
-                print("🎵 MOONNEST: ❌ Failed to start audio playback")
+                print("🎵 MOONNEST_LOG: ❌ Failed to start audio playback")
                 
                 // Additional diagnostics on failure
-                print("🎵 MOONNEST: Player exists: \(audioPlayer != nil)")
+                print("🎵 MOONNEST_LOG: Player exists: \(audioPlayer != nil)")
                 if let player = audioPlayer {
-                    print("🎵 MOONNEST: Player isPlaying: \(player.isPlaying)")
-                    print("🎵 MOONNEST: Player duration: \(player.duration)")
+                    print("🎵 MOONNEST_LOG: Player isPlaying: \(player.isPlaying)")
+                    print("🎵 MOONNEST_LOG: Player duration: \(player.duration)")
                 }
             }
             
         } catch {
-            print("🎵 MOONNEST: ❌ Error setting up audio for playback: \(error)")
+            print("🎵 MOONNEST_LOG: ❌ Error setting up audio for playback: \(error)")
             if let nsError = error as NSError? {
-                print("🎵 MOONNEST: Error domain: \(nsError.domain)")
-                print("🎵 MOONNEST: Error code: \(nsError.code)")
-                print("🎵 MOONNEST: Error description: \(nsError.localizedDescription)")
+                print("🎵 MOONNEST_LOG: Error domain: \(nsError.domain)")
+                print("🎵 MOONNEST_LOG: Error code: \(nsError.code)")
+                print("🎵 MOONNEST_LOG: Error description: \(nsError.localizedDescription)")
+            }
+        }
+    }
+    
+    private func startAudioStateMonitoring() {
+        print("🎵 MOONNEST_LOG: Starting audio state monitoring")
+        audioStateMonitor?.invalidate()
+        audioStateMonitor = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            if let player = self.audioPlayer {
+                let playerIsPlaying = player.isPlaying
+                let publishedIsPlaying = self.isPlaying
+                let currentTime = player.currentTime
+                
+                // Only log if there's a mismatch or every 10 seconds
+                let shouldLog = playerIsPlaying != publishedIsPlaying || Int(currentTime) % 10 == 0
+                
+                if shouldLog {
+                    print("🎵 MOONNEST_LOG: Monitor - Player: \(playerIsPlaying), Published: \(publishedIsPlaying), Time: \(currentTime)")
+                }
+                
+                // Detect if audio stopped unexpectedly
+                if publishedIsPlaying && !playerIsPlaying {
+                    print("🎵 MOONNEST_LOG: ⚠️ Audio stopped unexpectedly! Published: \(publishedIsPlaying), Player: \(playerIsPlaying)")
+                    DispatchQueue.main.async {
+                        self.isPlaying = false
+                    }
+                }
             }
         }
     }
     
     func stopSound() {
+        print("🎵 MOONNEST_LOG: stopSound called")
+        audioStateMonitor?.invalidate()
+        audioStateMonitor = nil
         audioPlayer?.stop()
         isPlaying = false
         currentSound = nil
@@ -388,20 +476,22 @@ class SoundPlayer: ObservableObject {
     }
     
     func toggleSound(_ soundName: String) {
-        print("🎵 MOONNEST: toggleSound called for \(soundName)")
-        print("🎵 MOONNEST: Current state - isPlaying: \(isPlaying), currentSound: \(currentSound ?? "none")")
+        NSLog("MOONNEST_LOG: toggleSound called for %@", soundName)
+        print("MOONNEST_LOG: toggleSound called for \(soundName)")
+        print("MOONNEST_LOG: Current state - isPlaying: \(isPlaying), currentSound: \(currentSound ?? "none")")
         
         if isPlaying && currentSound == soundName {
-            print("🎵 MOONNEST: Stopping current sound")
+            print("🎵 MOONNEST_LOG: Stopping current sound")
             stopSound()
         } else {
-            print("🎵 MOONNEST: Starting new sound")
+            print("🎵 MOONNEST_LOG: Starting new sound")
             playSound(soundName)
         }
     }
     
     
     deinit {
+        audioStateMonitor?.invalidate()
         audioPlayer?.stop()
         cancelTimer()
     }

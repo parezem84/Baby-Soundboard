@@ -126,24 +126,25 @@ struct ContentView: View {
                                 
                                 Spacer()
                                 
-                                Button(action: {
-                                    showingPaywall = true
-                                }) {
-                                    HStack(spacing: 4) {
-                                        Image(systemName: "crown.fill")
-                                            .font(.system(size: 14))
-                                        Text("Upgrade")
-                                            .font(.appCaption)
-                                    }
-                                    .foregroundColor(.white)
-                                    .padding(.horizontal, 12)
-                                    .padding(.vertical, 6)
-                                    .background(
-                                        RoundedRectangle(cornerRadius: 16)
-                                            .fill(Color.orange)
-                                    )
-                                }
-                                .padding(.trailing, 16)
+                                // Upgrade button hidden for v1 launch
+                                // Button(action: {
+                                //     showingPaywall = true
+                                // }) {
+                                //     HStack(spacing: 4) {
+                                //         Image(systemName: "crown.fill")
+                                //             .font(.system(size: 14))
+                                //         Text("Upgrade")
+                                //             .font(.appCaption)
+                                //     }
+                                //     .foregroundColor(.white)
+                                //     .padding(.horizontal, 12)
+                                //     .padding(.vertical, 6)
+                                //     .background(
+                                //         RoundedRectangle(cornerRadius: 16)
+                                //             .fill(Color.orange)
+                                //     )
+                                // }
+                                // .padding(.trailing, 16)
                             }
                         }
                         
@@ -241,18 +242,18 @@ struct ContentView: View {
                                         Image(systemName: "timer")
                                         Text("Timer")
                                         
-                                        // Premium badge
-                                        HStack(spacing: 2) {
-                                            Image(systemName: "crown.fill")
-                                                .font(.system(size: 8))
-                                            Text("PRO")
-                                                .font(.system(size: 8, weight: .bold))
-                                        }
-                                        .foregroundColor(.white)
-                                        .padding(.horizontal, 4)
-                                        .padding(.vertical, 2)
-                                        .background(Color.orange)
-                                        .cornerRadius(4)
+                                        // Premium badge hidden for v1 launch
+                                        // HStack(spacing: 2) {
+                                        //     Image(systemName: "crown.fill")
+                                        //         .font(.system(size: 8))
+                                        //     Text("PRO")
+                                        //         .font(.system(size: 8, weight: .bold))
+                                        // }
+                                        // .foregroundColor(.white)
+                                        // .padding(.horizontal, 4)
+                                        // .padding(.vertical, 2)
+                                        // .background(Color.orange)
+                                        // .cornerRadius(4)
                                     }
                                     .font(.appHeadline)
                                     .foregroundColor(.black)
@@ -285,9 +286,10 @@ struct ContentView: View {
             .sheet(isPresented: $showingSettings) {
                 SettingsView(soundPlayer: soundPlayer)
             }
-            .sheet(isPresented: $showingPaywall) {
-                PaywallView()
-            }
+            // Paywall sheet hidden for v1 launch
+            // .sheet(isPresented: $showingPaywall) {
+            //     PaywallView()
+            // }
             .onAppear {
                 soundPlayer.setVolume(defaultVolume / 100.0)
             }
