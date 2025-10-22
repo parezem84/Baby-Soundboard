@@ -363,6 +363,13 @@ struct SettingsView: View {
     @ObservedObject var soundPlayer: SoundPlayer
     @AppStorage("defaultVolume") private var defaultVolume: Double = 20
     
+    // Dynamic version from Info.plist
+    private var appVersion: String {
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
+        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
+        return "\(version) (\(build))"
+    }
+    
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
@@ -437,7 +444,7 @@ struct SettingsView: View {
                     
                     // Version number at the bottom
                     VStack(spacing: 8) {
-                        Text("Version 0.1")
+                        Text("Version \(appVersion)")
                             .font(.appCaption)
                             .foregroundColor(.white.opacity(0.6))
                     }
