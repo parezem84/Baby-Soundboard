@@ -1,13 +1,13 @@
 //
-//  Baby_SoundboardUITestsLaunchTests.swift
-//  Baby SoundboardUITests
+//  MoonNestUITestsLaunchTests.swift
+//  MoonNestUITests
 //
 //  Created by Michal Pařízek on 07.07.2025.
 //
 
 import XCTest
 
-final class Baby_SoundboardUITestsLaunchTests: XCTestCase {
+final class MoonNestUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

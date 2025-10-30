@@ -1,6 +1,6 @@
 //
 //  OnboardingView.swift
-//  Baby Soundboard
+//  MoonNest
 //
 //  Created by Michal Pařízek on 11.07.2025.
 //

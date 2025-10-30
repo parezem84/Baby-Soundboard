@@ -1,6 +1,6 @@
 //
 //  PaywallView.swift
-//  Baby Soundboard
+//  MoonNest
 //
 //  Created by Michal Pařízek on 14.07.2025.
 //
