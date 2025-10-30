@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		85A639D22EB38F86007A2A50 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 85A639D12EB38F86007A2A50 /* RevenueCat */; };
 		85BCB35B2E1FF0B8002BD7BF /* Quicksand-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85BCB3592E1FF0B8002BD7BF /* Quicksand-Regular.ttf */; };
 		85BCB35C2E1FF0B8002BD7BF /* Quicksand-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85BCB3562E1FF0B8002BD7BF /* Quicksand-Bold.ttf */; };
 		85BCB35D2E1FF0B8002BD7BF /* Quicksand-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85BCB3582E1FF0B8002BD7BF /* Quicksand-Medium.ttf */; };
@@ -93,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85A639D22EB38F86007A2A50 /* RevenueCat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,6 +128,7 @@
 				8562B33F2E1BF5D10034EFBB /* Baby Soundboard */,
 				8562B34D2E1BF5D20034EFBB /* Baby SoundboardTests */,
 				8562B3572E1BF5D20034EFBB /* Baby SoundboardUITests */,
+				85A639D02EB38F86007A2A50 /* Frameworks */,
 				8562B33E2E1BF5D10034EFBB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -138,6 +141,13 @@
 				8562B3542E1BF5D20034EFBB /* MoonNestUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		85A639D02EB38F86007A2A50 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -160,6 +170,7 @@
 			);
 			name = MoonNest;
 			packageProductDependencies = (
+				85A639D12EB38F86007A2A50 /* RevenueCat */,
 			);
 			productName = "Baby Soundboard";
 			productReference = 8562B33D2E1BF5D10034EFBB /* MoonNest.app */;
@@ -243,6 +254,9 @@
 			);
 			mainGroup = 8562B3342E1BF5D10034EFBB;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				85A639CF2EB38DD0007A2A50 /* XCRemoteSwiftPackageReference "purchases-ios" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8562B33E2E1BF5D10034EFBB /* Products */;
 			projectDirPath = "";
@@ -626,6 +640,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		85A639CF2EB38DD0007A2A50 /* XCRemoteSwiftPackageReference "purchases-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.45.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		85A639D12EB38F86007A2A50 /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 85A639CF2EB38DD0007A2A50 /* XCRemoteSwiftPackageReference "purchases-ios" */;
+			productName = RevenueCat;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8562B3352E1BF5D10034EFBB /* Project object */;
 }

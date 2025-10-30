@@ -196,12 +196,12 @@ struct PaywallView: View {
     }
     
     private func formatMonthlyPrice(from package: Package) -> String {
-        let yearlyPrice = package.storeProduct.price
+        let yearlyPrice = package.storeProduct.price as NSDecimalNumber
         let monthlyPrice = yearlyPrice.dividing(by: NSDecimalNumber(value: 12))
         
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
-        formatter.locale = package.storeProduct.priceLocale
+        formatter.locale = Locale.current
         
         return formatter.string(from: monthlyPrice) ?? ""
     }

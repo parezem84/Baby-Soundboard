@@ -9,7 +9,7 @@ import Foundation
 import RevenueCat
 import SwiftUI
 
-class RevenueCatManager: ObservableObject {
+class RevenueCatManager: NSObject, ObservableObject {
     static let shared = RevenueCatManager()
     
     @Published var isPremium = false
@@ -20,14 +20,15 @@ class RevenueCatManager: ObservableObject {
     private let monthlyProductID = "moonnest.monthly"
     private let yearlyProductID = "moonnest.yearly"
     
-    private init() {
+    override init() {
+        super.init()
         setupRevenueCat()
     }
     
     private func setupRevenueCat() {
         // Configure RevenueCat
         Purchases.logLevel = .debug
-        Purchases.configure(withAPIKey: "app2731b00cda")
+        Purchases.configure(withAPIKey: "appl_dfdmKzwUvfJgJDQjwBeolDdRHgs")
         
         // Set up delegate
         Purchases.shared.delegate = self
@@ -128,14 +129,16 @@ class RevenueCatManager: ObservableObject {
         return isPremium
     }
     
-    // Free vs Premium sound limits
+    // Show all sounds, but identify which are premium
     func getAvailableSounds(from allSounds: [(String, String, String)]) -> [(String, String, String)] {
-        if isPremium {
-            return allSounds
-        } else {
-            // Free users get first 5 sounds
-            return Array(allSounds.prefix(5))
-        }
+        // Always return all sounds - premium logic is handled in the UI
+        return allSounds
+    }
+    
+    // Check if a specific sound is premium (sounds 6-10 are premium)
+    func isSoundPremium(_ soundName: String, allSounds: [(String, String, String)]) -> Bool {
+        guard let index = allSounds.firstIndex(where: { $0.0 == soundName }) else { return false }
+        return index >= 5 // Sounds at index 5+ (6th sound onwards) are premium
     }
 }
 

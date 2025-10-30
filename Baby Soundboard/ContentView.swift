@@ -188,10 +188,9 @@ struct ContentView: View {
                                     emoji: sound.1,
                                     title: sound.2,
                                     isPlaying: soundPlayer.isPlaying && soundPlayer.currentSound == sound.0,
-                                    isPremium: !revenueCat.isPremium && sounds.firstIndex(where: { $0.0 == sound.0 }) ?? 0 >= 5
+                                    isPremium: !revenueCat.isPremium && revenueCat.isSoundPremium(sound.0, allSounds: sounds)
                                 ) {
-                                    let soundIndex = sounds.firstIndex(where: { $0.0 == sound.0 }) ?? 0
-                                    if !revenueCat.isPremium && soundIndex >= 5 {
+                                    if !revenueCat.isPremium && revenueCat.isSoundPremium(sound.0, allSounds: sounds) {
                                         showingPaywall = true
                                     } else {
                                         soundPlayer.toggleSound(sound.0)
