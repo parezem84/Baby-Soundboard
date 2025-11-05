@@ -1,6 +1,6 @@
 //
 //  OnboardingView.swift
-//  Baby Soundboard
+//  MoonNest
 //
 //  Created by Michal Pařízek on 11.07.2025.
 //
@@ -77,8 +77,8 @@ struct OnboardingView: View {
                             currentPage += 1
                         }
                     } else {
-                        // Complete onboarding directly (paywall hidden for v1 launch)
-                        completeOnboarding()
+                        // Show paywall before completing onboarding (enabled for v1.1)
+                        showPaywall = true
                     }
                 }) {
                     Text(onboardingPages[currentPage].buttonText)
@@ -117,14 +117,14 @@ struct OnboardingView: View {
                     }
                 }
         )
-        // Paywall sheet hidden for v1 launch
-        // .sheet(isPresented: $showPaywall) {
-        //     PaywallView()
-        //         .onDisappear {
-        //             // Complete onboarding when paywall is dismissed
-        //             completeOnboarding()
-        //         }
-        // }
+        // Paywall sheet (enabled for v1.1)
+        .sheet(isPresented: $showPaywall) {
+            PaywallView()
+                .onDisappear {
+                    // Complete onboarding when paywall is dismissed
+                    completeOnboarding()
+                }
+        }
     }
     
     private func completeOnboarding() {

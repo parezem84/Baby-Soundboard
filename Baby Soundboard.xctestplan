@@ -1,0 +1,38 @@
+{
+  "configurations" : [
+    {
+      "id" : "E78EB58A-2F70-4C77-B300-1E41784D464F",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "performanceAntipatternCheckerEnabled" : true,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Baby Soundboard.xcodeproj",
+      "identifier" : "8562B33C2E1BF5D10034EFBB",
+      "name" : "Baby Soundboard"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Baby Soundboard.xcodeproj",
+        "identifier" : "8562B3492E1BF5D20034EFBB",
+        "name" : "Baby SoundboardTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Baby Soundboard.xcodeproj",
+        "identifier" : "8562B3532E1BF5D20034EFBB",
+        "name" : "Baby SoundboardUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

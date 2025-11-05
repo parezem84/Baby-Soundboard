@@ -1,6 +1,6 @@
 //
-//  Baby_SoundboardApp.swift
-//  Baby Soundboard
+//  MoonNestApp.swift
+//  MoonNest
 //
 //  Created by Michal Pařízek on 07.07.2025.
 //
@@ -8,8 +8,9 @@
 import SwiftUI
 
 @main
-struct Baby_SoundboardApp: App {
+struct MoonNestApp: App {
     @State private var isLaunchScreenActive = true
+    @StateObject private var revenueCat = RevenueCatManager.shared
     
     var body: some Scene {
         WindowGroup {

@@ -1,13 +1,13 @@
 //
-//  Baby_SoundboardUITests.swift
-//  Baby SoundboardUITests
+//  MoonNestUITests.swift
+//  MoonNestUITests
 //
 //  Created by Michal Pařízek on 07.07.2025.
 //
 
 import XCTest
 
-final class Baby_SoundboardUITests: XCTestCase {
+final class MoonNestUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
