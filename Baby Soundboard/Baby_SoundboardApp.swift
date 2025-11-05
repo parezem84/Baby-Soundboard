@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct MoonNestApp: App {
     @State private var isLaunchScreenActive = true
+    @StateObject private var revenueCat = RevenueCatManager.shared
     
     var body: some Scene {
         WindowGroup {

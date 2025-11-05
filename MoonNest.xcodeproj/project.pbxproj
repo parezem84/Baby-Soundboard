@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		85A639D22EB38F86007A2A50 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 85A639D12EB38F86007A2A50 /* RevenueCat */; };
 		85BCB35B2E1FF0B8002BD7BF /* Quicksand-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85BCB3592E1FF0B8002BD7BF /* Quicksand-Regular.ttf */; };
 		85BCB35C2E1FF0B8002BD7BF /* Quicksand-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85BCB3562E1FF0B8002BD7BF /* Quicksand-Bold.ttf */; };
 		85BCB35D2E1FF0B8002BD7BF /* Quicksand-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85BCB3582E1FF0B8002BD7BF /* Quicksand-Medium.ttf */; };
@@ -45,9 +46,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8562B33D2E1BF5D10034EFBB /* Baby Soundboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Baby Soundboard.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8562B34A2E1BF5D20034EFBB /* Baby SoundboardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Baby SoundboardTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8562B3542E1BF5D20034EFBB /* Baby SoundboardUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Baby SoundboardUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		851EC47D2EB367E1000D85FA /* Baby Soundboard.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Baby Soundboard.xctestplan"; sourceTree = "<group>"; };
+		8562B33D2E1BF5D10034EFBB /* MoonNest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoonNest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8562B34A2E1BF5D20034EFBB /* MoonNestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoonNestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8562B3542E1BF5D20034EFBB /* MoonNestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoonNestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		85BCB3562E1FF0B8002BD7BF /* Quicksand-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-Bold.ttf"; sourceTree = "<group>"; };
 		85BCB3572E1FF0B8002BD7BF /* Quicksand-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-Light.ttf"; sourceTree = "<group>"; };
 		85BCB3582E1FF0B8002BD7BF /* Quicksand-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-Medium.ttf"; sourceTree = "<group>"; };
@@ -57,12 +59,12 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		8562B36E2E1C00520034EFBB /* Exceptions for "Baby Soundboard" folder in "Baby Soundboard" target */ = {
+		8562B36E2E1C00520034EFBB /* Exceptions for "Baby Soundboard" folder in "MoonNest" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 8562B33C2E1BF5D10034EFBB /* Baby Soundboard */;
+			target = 8562B33C2E1BF5D10034EFBB /* MoonNest */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -70,7 +72,7 @@
 		8562B33F2E1BF5D10034EFBB /* Baby Soundboard */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				8562B36E2E1C00520034EFBB /* Exceptions for "Baby Soundboard" folder in "Baby Soundboard" target */,
+				8562B36E2E1C00520034EFBB /* Exceptions for "Baby Soundboard" folder in "MoonNest" target */,
 			);
 			path = "Baby Soundboard";
 			sourceTree = "<group>";
@@ -92,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85A639D22EB38F86007A2A50 /* RevenueCat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,6 +118,7 @@
 		8562B3342E1BF5D10034EFBB = {
 			isa = PBXGroup;
 			children = (
+				851EC47D2EB367E1000D85FA /* Baby Soundboard.xctestplan */,
 				85BCB3732E1FFA39002BD7BF /* LaunchScreen.storyboard */,
 				85BCB3562E1FF0B8002BD7BF /* Quicksand-Bold.ttf */,
 				85BCB3572E1FF0B8002BD7BF /* Quicksand-Light.ttf */,
@@ -124,6 +128,7 @@
 				8562B33F2E1BF5D10034EFBB /* Baby Soundboard */,
 				8562B34D2E1BF5D20034EFBB /* Baby SoundboardTests */,
 				8562B3572E1BF5D20034EFBB /* Baby SoundboardUITests */,
+				85A639D02EB38F86007A2A50 /* Frameworks */,
 				8562B33E2E1BF5D10034EFBB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -131,19 +136,26 @@
 		8562B33E2E1BF5D10034EFBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8562B33D2E1BF5D10034EFBB /* Baby Soundboard.app */,
-				8562B34A2E1BF5D20034EFBB /* Baby SoundboardTests.xctest */,
-				8562B3542E1BF5D20034EFBB /* Baby SoundboardUITests.xctest */,
+				8562B33D2E1BF5D10034EFBB /* MoonNest.app */,
+				8562B34A2E1BF5D20034EFBB /* MoonNestTests.xctest */,
+				8562B3542E1BF5D20034EFBB /* MoonNestUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		85A639D02EB38F86007A2A50 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8562B33C2E1BF5D10034EFBB /* Baby Soundboard */ = {
+		8562B33C2E1BF5D10034EFBB /* MoonNest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8562B35E2E1BF5D20034EFBB /* Build configuration list for PBXNativeTarget "Baby Soundboard" */;
+			buildConfigurationList = 8562B35E2E1BF5D20034EFBB /* Build configuration list for PBXNativeTarget "MoonNest" */;
 			buildPhases = (
 				8562B3392E1BF5D10034EFBB /* Sources */,
 				8562B33A2E1BF5D10034EFBB /* Frameworks */,
@@ -156,16 +168,17 @@
 			fileSystemSynchronizedGroups = (
 				8562B33F2E1BF5D10034EFBB /* Baby Soundboard */,
 			);
-			name = "Baby Soundboard";
+			name = MoonNest;
 			packageProductDependencies = (
+				85A639D12EB38F86007A2A50 /* RevenueCat */,
 			);
 			productName = "Baby Soundboard";
-			productReference = 8562B33D2E1BF5D10034EFBB /* Baby Soundboard.app */;
+			productReference = 8562B33D2E1BF5D10034EFBB /* MoonNest.app */;
 			productType = "com.apple.product-type.application";
 		};
-		8562B3492E1BF5D20034EFBB /* Baby SoundboardTests */ = {
+		8562B3492E1BF5D20034EFBB /* MoonNestTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8562B3612E1BF5D20034EFBB /* Build configuration list for PBXNativeTarget "Baby SoundboardTests" */;
+			buildConfigurationList = 8562B3612E1BF5D20034EFBB /* Build configuration list for PBXNativeTarget "MoonNestTests" */;
 			buildPhases = (
 				8562B3462E1BF5D20034EFBB /* Sources */,
 				8562B3472E1BF5D20034EFBB /* Frameworks */,
@@ -179,16 +192,16 @@
 			fileSystemSynchronizedGroups = (
 				8562B34D2E1BF5D20034EFBB /* Baby SoundboardTests */,
 			);
-			name = "Baby SoundboardTests";
+			name = MoonNestTests;
 			packageProductDependencies = (
 			);
 			productName = "Baby SoundboardTests";
-			productReference = 8562B34A2E1BF5D20034EFBB /* Baby SoundboardTests.xctest */;
+			productReference = 8562B34A2E1BF5D20034EFBB /* MoonNestTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		8562B3532E1BF5D20034EFBB /* Baby SoundboardUITests */ = {
+		8562B3532E1BF5D20034EFBB /* MoonNestUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8562B3642E1BF5D20034EFBB /* Build configuration list for PBXNativeTarget "Baby SoundboardUITests" */;
+			buildConfigurationList = 8562B3642E1BF5D20034EFBB /* Build configuration list for PBXNativeTarget "MoonNestUITests" */;
 			buildPhases = (
 				8562B3502E1BF5D20034EFBB /* Sources */,
 				8562B3512E1BF5D20034EFBB /* Frameworks */,
@@ -202,11 +215,11 @@
 			fileSystemSynchronizedGroups = (
 				8562B3572E1BF5D20034EFBB /* Baby SoundboardUITests */,
 			);
-			name = "Baby SoundboardUITests";
+			name = MoonNestUITests;
 			packageProductDependencies = (
 			);
 			productName = "Baby SoundboardUITests";
-			productReference = 8562B3542E1BF5D20034EFBB /* Baby SoundboardUITests.xctest */;
+			productReference = 8562B3542E1BF5D20034EFBB /* MoonNestUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -217,7 +230,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1640;
-				LastUpgradeCheck = 1640;
+				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					8562B33C2E1BF5D10034EFBB = {
 						CreatedOnToolsVersion = 16.4;
@@ -232,7 +245,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8562B3382E1BF5D10034EFBB /* Build configuration list for PBXProject "Baby Soundboard" */;
+			buildConfigurationList = 8562B3382E1BF5D10034EFBB /* Build configuration list for PBXProject "MoonNest" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -241,14 +254,17 @@
 			);
 			mainGroup = 8562B3342E1BF5D10034EFBB;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				85A639CF2EB38DD0007A2A50 /* XCRemoteSwiftPackageReference "purchases-ios" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8562B33E2E1BF5D10034EFBB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8562B33C2E1BF5D10034EFBB /* Baby Soundboard */,
-				8562B3492E1BF5D20034EFBB /* Baby SoundboardTests */,
-				8562B3532E1BF5D20034EFBB /* Baby SoundboardUITests */,
+				8562B33C2E1BF5D10034EFBB /* MoonNest */,
+				8562B3492E1BF5D20034EFBB /* MoonNestTests */,
+				8562B3532E1BF5D20034EFBB /* MoonNestUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -322,12 +338,12 @@
 /* Begin PBXTargetDependency section */
 		8562B34C2E1BF5D20034EFBB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8562B33C2E1BF5D10034EFBB /* Baby Soundboard */;
+			target = 8562B33C2E1BF5D10034EFBB /* MoonNest */;
 			targetProxy = 8562B34B2E1BF5D20034EFBB /* PBXContainerItemProxy */;
 		};
 		8562B3562E1BF5D20034EFBB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8562B33C2E1BF5D10034EFBB /* Baby Soundboard */;
+			target = 8562B33C2E1BF5D10034EFBB /* MoonNest */;
 			targetProxy = 8562B3552E1BF5D20034EFBB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -391,6 +407,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -447,6 +464,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -526,7 +544,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Baby Soundboard.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Baby Soundboard";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MoonNest.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MoonNest";
 			};
 			name = Debug;
 		};
@@ -546,7 +564,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Baby Soundboard.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Baby Soundboard";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MoonNest.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MoonNest";
 			};
 			name = Release;
 		};
@@ -585,7 +603,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8562B3382E1BF5D10034EFBB /* Build configuration list for PBXProject "Baby Soundboard" */ = {
+		8562B3382E1BF5D10034EFBB /* Build configuration list for PBXProject "MoonNest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8562B35C2E1BF5D20034EFBB /* Debug */,
@@ -594,7 +612,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8562B35E2E1BF5D20034EFBB /* Build configuration list for PBXNativeTarget "Baby Soundboard" */ = {
+		8562B35E2E1BF5D20034EFBB /* Build configuration list for PBXNativeTarget "MoonNest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8562B35F2E1BF5D20034EFBB /* Debug */,
@@ -603,7 +621,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8562B3612E1BF5D20034EFBB /* Build configuration list for PBXNativeTarget "Baby SoundboardTests" */ = {
+		8562B3612E1BF5D20034EFBB /* Build configuration list for PBXNativeTarget "MoonNestTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8562B3622E1BF5D20034EFBB /* Debug */,
@@ -612,7 +630,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8562B3642E1BF5D20034EFBB /* Build configuration list for PBXNativeTarget "Baby SoundboardUITests" */ = {
+		8562B3642E1BF5D20034EFBB /* Build configuration list for PBXNativeTarget "MoonNestUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8562B3652E1BF5D20034EFBB /* Debug */,
@@ -622,6 +640,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		85A639CF2EB38DD0007A2A50 /* XCRemoteSwiftPackageReference "purchases-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.45.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		85A639D12EB38F86007A2A50 /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 85A639CF2EB38DD0007A2A50 /* XCRemoteSwiftPackageReference "purchases-ios" */;
+			productName = RevenueCat;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8562B3352E1BF5D10034EFBB /* Project object */;
 }

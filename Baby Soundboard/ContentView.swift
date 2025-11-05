@@ -71,6 +71,7 @@ extension Color {
 
 struct ContentView: View {
     @StateObject private var soundPlayer = SoundPlayer()
+    @StateObject private var revenueCat = RevenueCatManager.shared
     @State private var showingSettings = false
     @State private var showingPaywall = false
     @State private var isOnboardingComplete = UserDefaults.standard.bool(forKey: "hasCompletedOnboarding")
@@ -126,25 +127,27 @@ struct ContentView: View {
                                 
                                 Spacer()
                                 
-                                // Upgrade button hidden for v1 launch
-                                // Button(action: {
-                                //     showingPaywall = true
-                                // }) {
-                                //     HStack(spacing: 4) {
-                                //         Image(systemName: "crown.fill")
-                                //             .font(.system(size: 14))
-                                //         Text("Upgrade")
-                                //             .font(.appCaption)
-                                //     }
-                                //     .foregroundColor(.white)
-                                //     .padding(.horizontal, 12)
-                                //     .padding(.vertical, 6)
-                                //     .background(
-                                //         RoundedRectangle(cornerRadius: 16)
-                                //             .fill(Color.orange)
-                                //     )
-                                // }
-                                // .padding(.trailing, 16)
+                                // Upgrade button (enabled for v1.1)
+                                if !revenueCat.isPremium {
+                                    Button(action: {
+                                        showingPaywall = true
+                                    }) {
+                                        HStack(spacing: 4) {
+                                            Image(systemName: "crown.fill")
+                                                .font(.system(size: 14))
+                                            Text("Upgrade")
+                                                .font(.appCaption)
+                                        }
+                                        .foregroundColor(.white)
+                                        .padding(.horizontal, 12)
+                                        .padding(.vertical, 6)
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 16)
+                                                .fill(Color.orange)
+                                        )
+                                    }
+                                    .padding(.trailing, 16)
+                                }
                             }
                         }
                         
@@ -179,14 +182,19 @@ struct ContentView: View {
                     
                     ScrollView {
                         LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: 2), spacing: 16) {
-                            ForEach(sounds, id: \.0) { sound in
+                            ForEach(revenueCat.getAvailableSounds(from: sounds), id: \.0) { sound in
                                 SoundButton(
                                     soundName: sound.0,
                                     emoji: sound.1,
                                     title: sound.2,
-                                    isPlaying: soundPlayer.isPlaying && soundPlayer.currentSound == sound.0
+                                    isPlaying: soundPlayer.isPlaying && soundPlayer.currentSound == sound.0,
+                                    isPremium: !revenueCat.isPremium && revenueCat.isSoundPremium(sound.0, allSounds: sounds)
                                 ) {
-                                    soundPlayer.toggleSound(sound.0)
+                                    if !revenueCat.isPremium && revenueCat.isSoundPremium(sound.0, allSounds: sounds) {
+                                        showingPaywall = true
+                                    } else {
+                                        soundPlayer.toggleSound(sound.0)
+                                    }
                                 }
                             }
                         }
@@ -222,38 +230,46 @@ struct ContentView: View {
                                 
                                 // Timer menu button
                                 Menu {
-                                    Button("5 minutes") {
-                                        soundPlayer.scheduleStop(after: 5 * 60)
-                                    }
-                                    Button("10 minutes") {
-                                        soundPlayer.scheduleStop(after: 10 * 60)
-                                    }
-                                    Button("30 minutes") {
-                                        soundPlayer.scheduleStop(after: 30 * 60)
-                                    }
-                                    Button("1 hour") {
-                                        soundPlayer.scheduleStop(after: 60 * 60)
-                                    }
-                                    Button("2 hours") {
-                                        soundPlayer.scheduleStop(after: 120 * 60)
+                                    if revenueCat.isPremium {
+                                        Button("5 minutes") {
+                                            soundPlayer.scheduleStop(after: 5 * 60)
+                                        }
+                                        Button("10 minutes") {
+                                            soundPlayer.scheduleStop(after: 10 * 60)
+                                        }
+                                        Button("30 minutes") {
+                                            soundPlayer.scheduleStop(after: 30 * 60)
+                                        }
+                                        Button("1 hour") {
+                                            soundPlayer.scheduleStop(after: 60 * 60)
+                                        }
+                                        Button("2 hours") {
+                                            soundPlayer.scheduleStop(after: 120 * 60)
+                                        }
+                                    } else {
+                                        Button("Upgrade to Premium") {
+                                            showingPaywall = true
+                                        }
                                     }
                                 } label: {
                                     HStack {
                                         Image(systemName: "timer")
                                         Text("Timer")
                                         
-                                        // Premium badge hidden for v1 launch
-                                        // HStack(spacing: 2) {
-                                        //     Image(systemName: "crown.fill")
-                                        //         .font(.system(size: 8))
-                                        //     Text("PRO")
-                                        //         .font(.system(size: 8, weight: .bold))
-                                        // }
-                                        // .foregroundColor(.white)
-                                        // .padding(.horizontal, 4)
-                                        // .padding(.vertical, 2)
-                                        // .background(Color.orange)
-                                        // .cornerRadius(4)
+                                        // Premium badge (enabled for v1.1)
+                                        if !revenueCat.isPremium {
+                                            HStack(spacing: 2) {
+                                                Image(systemName: "crown.fill")
+                                                    .font(.system(size: 8))
+                                                Text("PRO")
+                                                    .font(.system(size: 8, weight: .bold))
+                                            }
+                                            .foregroundColor(.white)
+                                            .padding(.horizontal, 4)
+                                            .padding(.vertical, 2)
+                                            .background(Color.orange)
+                                            .cornerRadius(4)
+                                        }
                                     }
                                     .font(.appHeadline)
                                     .foregroundColor(.black)
@@ -286,10 +302,10 @@ struct ContentView: View {
             .sheet(isPresented: $showingSettings) {
                 SettingsView(soundPlayer: soundPlayer)
             }
-            // Paywall sheet hidden for v1 launch
-            // .sheet(isPresented: $showingPaywall) {
-            //     PaywallView()
-            // }
+            // Paywall sheet (enabled for v1.1)
+            .sheet(isPresented: $showingPaywall) {
+                PaywallView()
+            }
             .onAppear {
                 soundPlayer.setVolume(defaultVolume / 100.0)
             }
@@ -302,6 +318,7 @@ struct SoundButton: View {
     let emoji: String
     let title: String
     let isPlaying: Bool
+    let isPremium: Bool
     let action: () -> Void
     
     var body: some View {
@@ -336,11 +353,28 @@ struct SoundButton: View {
                         )
                 )
                 
-                // Play indicator icon - top right corner
-                if isPlaying {
-                    VStack {
-                        HStack {
-                            Spacer()
+                // Top right corner indicators
+                VStack {
+                    HStack {
+                        Spacer()
+                        
+                        if isPremium {
+                            // Premium badge for locked sounds
+                            HStack(spacing: 2) {
+                                Image(systemName: "crown.fill")
+                                    .font(.system(size: 8))
+                                Text("PRO")
+                                    .font(.system(size: 6, weight: .bold))
+                            }
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 4)
+                            .padding(.vertical, 2)
+                            .background(Color.orange)
+                            .cornerRadius(4)
+                            .padding(.top, 8)
+                            .padding(.trailing, 8)
+                        } else if isPlaying {
+                            // Play indicator for active sounds
                             Image("sound")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
@@ -349,8 +383,8 @@ struct SoundButton: View {
                                 .padding(.top, 8)
                                 .padding(.trailing, 8)
                         }
-                        Spacer()
                     }
+                    Spacer()
                 }
             }
         }

@@ -6,14 +6,12 @@
 //
 
 import SwiftUI
+import RevenueCat
 
 struct PaywallView: View {
     @Environment(\.dismiss) private var dismiss
+    @StateObject private var revenueCat = RevenueCatManager.shared
     @State private var selectedPlan: SubscriptionPlan = .yearly
-    
-    private let monthlyPrice = "$2.99"
-    private let yearlyPrice = "$19.99"
-    private let yearlyMonthlyPrice = "$1.67"
     
     var body: some View {
         ZStack {
@@ -75,28 +73,45 @@ struct PaywallView: View {
                 
                 // Subscription plans
                 VStack(spacing: 12) {
-                    // Yearly plan
-                    SubscriptionPlanCard(
-                        plan: .yearly,
-                        title: "Yearly",
-                        price: yearlyPrice,
-                        priceDetail: "\(yearlyMonthlyPrice)/month",
-                        badge: "BEST VALUE",
-                        isSelected: selectedPlan == .yearly
-                    ) {
-                        selectedPlan = .yearly
-                    }
-                    
-                    // Monthly plan
-                    SubscriptionPlanCard(
-                        plan: .monthly,
-                        title: "Monthly",
-                        price: monthlyPrice,
-                        priceDetail: "per month",
-                        badge: nil,
-                        isSelected: selectedPlan == .monthly
-                    ) {
-                        selectedPlan = .monthly
+                    if let offering = revenueCat.currentOffering {
+                        // Yearly plan
+                        if let yearlyPackage = offering.annual {
+                            SubscriptionPlanCard(
+                                plan: .yearly,
+                                title: "Yearly",
+                                price: yearlyPackage.storeProduct.localizedPriceString,
+                                priceDetail: "\(formatMonthlyPrice(from: yearlyPackage))/month",
+                                badge: "BEST VALUE",
+                                isSelected: selectedPlan == .yearly
+                            ) {
+                                selectedPlan = .yearly
+                            }
+                        }
+                        
+                        // Monthly plan
+                        if let monthlyPackage = offering.monthly {
+                            SubscriptionPlanCard(
+                                plan: .monthly,
+                                title: "Monthly",
+                                price: monthlyPackage.storeProduct.localizedPriceString,
+                                priceDetail: "per month",
+                                badge: nil,
+                                isSelected: selectedPlan == .monthly
+                            ) {
+                                selectedPlan = .monthly
+                            }
+                        }
+                    } else {
+                        // Loading state
+                        VStack(spacing: 12) {
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(Color.white.opacity(0.1))
+                                .frame(height: 70)
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(Color.white.opacity(0.1))
+                                .frame(height: 70)
+                        }
+                        .redacted(reason: .placeholder)
                     }
                 }
                 .padding(.horizontal, 32)
@@ -104,23 +119,38 @@ struct PaywallView: View {
                 
                 // Subscribe button
                 Button(action: {
-                    // TODO: Implement subscription logic
-                    print("Subscribe to \(selectedPlan)")
+                    if selectedPlan == .yearly {
+                        revenueCat.purchaseYearly()
+                    } else {
+                        revenueCat.purchaseMonthly()
+                    }
                 }) {
-                    Text("Start Free Trial")
-                        .font(.appHeadline)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 56)
-                        .background(
-                            RoundedRectangle(cornerRadius: 28)
-                                .fill(Color.white.opacity(0.2))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 28)
-                                        .stroke(Color.white.opacity(0.4), lineWidth: 1)
-                                )
-                        )
+                    if revenueCat.isLoading {
+                        HStack {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                .scaleEffect(0.8)
+                            Text("Processing...")
+                                .font(.appHeadline)
+                                .foregroundColor(.white)
+                        }
+                    } else {
+                        Text("Start Free Trial")
+                            .font(.appHeadline)
+                            .foregroundColor(.white)
+                    }
                 }
+                .frame(maxWidth: .infinity)
+                .frame(height: 56)
+                .background(
+                    RoundedRectangle(cornerRadius: 28)
+                        .fill(Color.white.opacity(0.2))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 28)
+                                .stroke(Color.white.opacity(0.4), lineWidth: 1)
+                        )
+                )
+                .disabled(revenueCat.isLoading || revenueCat.currentOffering == nil)
                 .padding(.horizontal, 32)
                 .padding(.bottom, 16)
                 
@@ -140,20 +170,40 @@ struct PaywallView: View {
                         .foregroundColor(.white.opacity(0.7))
                         
                         Button("Restore") {
-                            // TODO: Restore purchases
+                            revenueCat.restorePurchases()
                         }
                         .font(.appCaption)
                         .foregroundColor(.white.opacity(0.7))
                     }
                     
-                    Text("7-day free trial, then \(selectedPlan == .yearly ? yearlyPrice + "/year" : monthlyPrice + "/month")")
-                        .font(.appCaption)
-                        .foregroundColor(.white.opacity(0.6))
-                        .multilineTextAlignment(.center)
+                    if let offering = revenueCat.currentOffering {
+                        let priceText = selectedPlan == .yearly 
+                            ? (offering.annual?.storeProduct.localizedPriceString ?? "") + "/year"
+                            : (offering.monthly?.storeProduct.localizedPriceString ?? "") + "/month"
+                        
+                        Text("7-day free trial, then \(priceText)")
+                            .font(.appCaption)
+                            .foregroundColor(.white.opacity(0.6))
+                            .multilineTextAlignment(.center)
+                    }
                 }
                 .padding(.bottom, 40)
             }
         }
+        .onAppear {
+            revenueCat.loadOfferings()
+        }
+    }
+    
+    private func formatMonthlyPrice(from package: Package) -> String {
+        let yearlyPrice = package.storeProduct.price as NSDecimalNumber
+        let monthlyPrice = yearlyPrice.dividing(by: NSDecimalNumber(value: 12))
+        
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.locale = Locale.current
+        
+        return formatter.string(from: monthlyPrice) ?? ""
     }
 }
 
