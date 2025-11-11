@@ -92,7 +92,19 @@ struct ContentView: View {
         ("fireplace", "fireplace", "Fireplace"),
         ("wind", "wind", "Wind"),
         ("lullaby", "lullaby", "Lullaby"),
-        ("birds_chirping", "bird", "Birds Chirping")
+        ("birds_chirping", "bird", "Birds Chirping"),
+        ("airplane", "airplane", "Airplane"),
+        ("clock-ticking-down", "clock-ticking-down", "Ticking Clock"),
+        ("desk-fan", "desk-fan", "Fan"),
+        ("filling-a-bathtub", "filling-a-bathtub", "Bath Time"),
+        ("insects-at-night", "insects-at-night", "Night Insects"),
+        ("inside-old-train", "inside-old-train", "Train Ride"),
+        ("piano", "piano", "Piano"),
+        ("river-stream", "river-stream", "River Stream"),
+        ("shh-sound-effect", "shh-sound-effect", "Shh"),
+        ("subway-ride", "subway-ride", "Subway"),
+        ("thunderstorm", "thunderstorm", "Thunderstorm"),
+        ("vacuum-cleaner", "vacuum-cleaner", "Vacuum")
     ]
     
     var body: some View {
