@@ -104,7 +104,7 @@ struct ContentView: View {
         ("shh-sound-effect", "shh-sound-effect", "Shh"),
         ("subway-ride", "subway-ride", "Subway"),
         ("thunderstorm", "thunderstorm", "Thunderstorm"),
-        ("vacuum-cleaner", "vacuum-cleaner", "Vacuum")
+        ("vacuum-cleaner", "vacuum-cleaner", "Vacuum Cleaner")
     ]
     
     var body: some View {
