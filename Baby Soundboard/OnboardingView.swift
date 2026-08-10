@@ -6,15 +6,15 @@
 //
 
 import SwiftUI
+import SuperwallKit
 
 struct OnboardingView: View {
     @State private var currentPage = 0
-    @State private var showPaywall = false
     @Binding var isOnboardingComplete: Bool
     
     private let onboardingPages = [
         OnboardingPage(
-            title: "30+ calming sounds to help your little one relax and sleep.",
+            title: "20+ calming sounds to help your little one relax and sleep.",
             buttonText: "Continue",
             illustration: .sounds
         ),
@@ -78,7 +78,9 @@ struct OnboardingView: View {
                         }
                     } else {
                         // Show paywall before completing onboarding (enabled for v1.1)
-                        showPaywall = true
+                        Superwall.shared.register(placement: "onboarding_paywall") {
+                            completeOnboarding()
+                        }
                     }
                 }) {
                     Text(onboardingPages[currentPage].buttonText)
@@ -117,14 +119,6 @@ struct OnboardingView: View {
                     }
                 }
         )
-        // Paywall sheet (enabled for v1.1)
-        .sheet(isPresented: $showPaywall) {
-            PaywallView()
-                .onDisappear {
-                    // Complete onboarding when paywall is dismissed
-                    completeOnboarding()
-                }
-        }
     }
     
     private func completeOnboarding() {

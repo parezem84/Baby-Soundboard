@@ -6,12 +6,31 @@
 //
 
 import SwiftUI
+import SuperwallKit
 
 @main
 struct MoonNestApp: App {
     @State private var isLaunchScreenActive = true
     @StateObject private var revenueCat = RevenueCatManager.shared
-    
+    private let purchaseController = RCPurchaseController()
+
+    init() {
+        // Configure Superwall first so its handshake doesn't wait on RevenueCat/StoreKit,
+        // which can hang independently (e.g. AppTransaction fetch issues in sandbox).
+        let superwallOptions = SuperwallOptions()
+        superwallOptions.logging.level = .debug
+        Superwall.configure(
+            apiKey: "pk_d9t9BreHch8DduTqt3CbF",
+            purchaseController: purchaseController,
+            options: superwallOptions
+        )
+        // Shared ID so RevenueCat subscription data links up with Superwall paywall events.
+        Superwall.shared.identify(userId: AppUserIdentity.current)
+
+        RevenueCatManager.shared.configure()
+        purchaseController.syncSubscriptionStatus()
+    }
+
     var body: some Scene {
         WindowGroup {
             if isLaunchScreenActive {

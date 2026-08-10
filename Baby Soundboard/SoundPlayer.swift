@@ -430,9 +430,12 @@ class SoundPlayer: ObservableObject {
         isPlaying = false
         currentSound = nil
         cancelTimer()
-        
+
         // Clear Now Playing info
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nil
+
+        // Request review after sound stops
+        ReviewManager.shared.handleSoundStop()
     }
     
     func scheduleStop(after duration: TimeInterval) {

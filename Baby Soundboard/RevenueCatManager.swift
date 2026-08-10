@@ -22,13 +22,16 @@ class RevenueCatManager: NSObject, ObservableObject {
     
     override init() {
         super.init()
+    }
+
+    func configure() {
         setupRevenueCat()
     }
-    
+
     private func setupRevenueCat() {
         // Configure RevenueCat
         Purchases.logLevel = .debug
-        Purchases.configure(withAPIKey: "appl_dfdmKzwUvfJgJDQjwBeolDdRHgs")
+        Purchases.configure(withAPIKey: "appl_dfdmKzwUvfJgJDQjwBeolDdRHgs", appUserID: AppUserIdentity.current)
         
         // Set up delegate
         Purchases.shared.delegate = self
@@ -42,7 +45,7 @@ class RevenueCatManager: NSObject, ObservableObject {
         Purchases.shared.getCustomerInfo { [weak self] customerInfo, error in
             DispatchQueue.main.async {
                 if let customerInfo = customerInfo {
-                    self?.isPremium = customerInfo.entitlements["premium"]?.isActive == true
+                    self?.isPremium = customerInfo.entitlements["Pro"]?.isActive == true
                     print("RevenueCat: Premium status = \(self?.isPremium ?? false)")
                 } else if let error = error {
                     print("RevenueCat Error: \(error.localizedDescription)")
@@ -91,10 +94,15 @@ class RevenueCatManager: NSObject, ObservableObject {
         Purchases.shared.purchase(package: package) { [weak self] transaction, customerInfo, error, userCancelled in
             DispatchQueue.main.async {
                 self?.isLoading = false
-                
+
                 if let customerInfo = customerInfo {
-                    self?.isPremium = customerInfo.entitlements["premium"]?.isActive == true
-                    print("RevenueCat: Purchase successful, premium = \(self?.isPremium ?? false)")
+                    print("RevenueCat: Purchase completed!")
+                    print("RevenueCat: All entitlements: \(customerInfo.entitlements.all.keys)")
+                    print("RevenueCat: Pro entitlement active: \(customerInfo.entitlements["Pro"]?.isActive ?? false)")
+                    print("RevenueCat: Active subscriptions: \(customerInfo.activeSubscriptions)")
+
+                    self?.isPremium = customerInfo.entitlements["Pro"]?.isActive == true
+                    print("RevenueCat: isPremium set to: \(self?.isPremium ?? false)")
                 } else if userCancelled {
                     print("RevenueCat: Purchase cancelled by user")
                 } else if let error = error {
@@ -104,17 +112,26 @@ class RevenueCatManager: NSObject, ObservableObject {
         }
     }
     
-    func restorePurchases() {
+    func restorePurchases(completion: @escaping (Bool, String) -> Void) {
         isLoading = true
         Purchases.shared.restorePurchases { [weak self] customerInfo, error in
             DispatchQueue.main.async {
                 self?.isLoading = false
-                
-                if let customerInfo = customerInfo {
-                    self?.isPremium = customerInfo.entitlements["premium"]?.isActive == true
-                    print("RevenueCat: Restore successful, premium = \(self?.isPremium ?? false)")
-                } else if let error = error {
+
+                if let error = error {
                     print("RevenueCat: Restore error - \(error.localizedDescription)")
+                    completion(false, "Unable to restore purchases. Please try again.")
+                } else if let customerInfo = customerInfo {
+                    self?.isPremium = customerInfo.entitlements["Pro"]?.isActive == true
+                    print("RevenueCat: Restore successful, premium = \(self?.isPremium ?? false)")
+
+                    if self?.isPremium == true {
+                        completion(true, "Purchases restored successfully!")
+                    } else {
+                        completion(false, "No purchases found to restore.")
+                    }
+                } else {
+                    completion(false, "No purchases found to restore.")
                 }
             }
         }
@@ -146,7 +163,7 @@ class RevenueCatManager: NSObject, ObservableObject {
 extension RevenueCatManager: PurchasesDelegate {
     func purchases(_ purchases: Purchases, receivedUpdated customerInfo: CustomerInfo) {
         DispatchQueue.main.async {
-            self.isPremium = customerInfo.entitlements["premium"]?.isActive == true
+            self.isPremium = customerInfo.entitlements["Pro"]?.isActive == true
             print("RevenueCat: Customer info updated, premium = \(self.isPremium)")
         }
     }

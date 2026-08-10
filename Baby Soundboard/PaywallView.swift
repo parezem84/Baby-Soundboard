@@ -12,6 +12,8 @@ struct PaywallView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject private var revenueCat = RevenueCatManager.shared
     @State private var selectedPlan: SubscriptionPlan = .yearly
+    @State private var showRestoreAlert = false
+    @State private var restoreAlertMessage = ""
     
     var body: some View {
         ZStack {
@@ -41,7 +43,7 @@ struct PaywallView: View {
                 .padding(.bottom, 20)
                 
                 // Title
-                Text("Unlock Premium")
+                Text("Unlock Pro")
                     .font(.appLargeTitle)
                     .foregroundColor(.white)
                     .padding(.bottom, 40)
@@ -50,7 +52,7 @@ struct PaywallView: View {
                 VStack(spacing: 24) {
                     PremiumFeatureRow(
                         icon: "music.note.list",
-                        title: "80% More Sounds",
+                        title: "20+ Soothing Sounds",
                         description: "Access to all calming sounds in the library"
                     )
                     
@@ -94,7 +96,7 @@ struct PaywallView: View {
                                 plan: .monthly,
                                 title: "Monthly",
                                 price: monthlyPackage.storeProduct.localizedPriceString,
-                                priceDetail: "per month",
+                                priceDetail: "",
                                 badge: nil,
                                 isSelected: selectedPlan == .monthly
                             ) {
@@ -135,7 +137,7 @@ struct PaywallView: View {
                                 .foregroundColor(.white)
                         }
                     } else {
-                        Text("Start Free Trial")
+                        Text(selectedPlan == .yearly ? "Start 3-Day Free Trial" : "Continue")
                             .font(.appHeadline)
                             .foregroundColor(.white)
                     }
@@ -151,41 +153,55 @@ struct PaywallView: View {
                         )
                 )
                 .disabled(revenueCat.isLoading || revenueCat.currentOffering == nil)
+                .onChange(of: revenueCat.isPremium) { isPremium in
+                    if isPremium {
+                        dismiss()
+                    }
+                }
                 .padding(.horizontal, 32)
-                .padding(.bottom, 16)
-                
-                // Terms and restore
-                VStack(spacing: 8) {
-                    HStack(spacing: 16) {
-                        Button("Terms of Service") {
-                            // TODO: Open terms
-                        }
+                .padding(.bottom, 8)
+
+                // Disclaimer text below CTA
+                if let offering = revenueCat.currentOffering {
+                    let priceText = selectedPlan == .yearly
+                        ? (offering.annual?.storeProduct.localizedPriceString ?? "") + "/year"
+                        : (offering.monthly?.storeProduct.localizedPriceString ?? "") + "/month"
+
+                    let disclaimerText = selectedPlan == .yearly
+                        ? "3-day free trial, then \(priceText)"
+                        : priceText
+
+                    Text(disclaimerText)
                         .font(.appCaption)
-                        .foregroundColor(.white.opacity(0.7))
-                        
-                        Button("Privacy Policy") {
-                            // TODO: Open privacy
+                        .foregroundColor(.white.opacity(0.6))
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 32)
+                        .padding(.bottom, 16)
+                }
+
+                Spacer()
+
+                // Privacy Policy, Redeem Code, and Restore at bottom
+                HStack(spacing: 16) {
+                    Button("Privacy Policy") {
+                        if let url = URL(string: "https://intelligent-eel-d04.notion.site/MoonNest-Privacy-Policy-29a86cea7c0a805f8d5ce1eb63f1b649?pvs=74") {
+                            UIApplication.shared.open(url)
                         }
-                        .font(.appCaption)
-                        .foregroundColor(.white.opacity(0.7))
-                        
-                        Button("Restore") {
-                            revenueCat.restorePurchases()
-                        }
-                        .font(.appCaption)
-                        .foregroundColor(.white.opacity(0.7))
                     }
-                    
-                    if let offering = revenueCat.currentOffering {
-                        let priceText = selectedPlan == .yearly 
-                            ? (offering.annual?.storeProduct.localizedPriceString ?? "") + "/year"
-                            : (offering.monthly?.storeProduct.localizedPriceString ?? "") + "/month"
-                        
-                        Text("7-day free trial, then \(priceText)")
-                            .font(.appCaption)
-                            .foregroundColor(.white.opacity(0.6))
-                            .multilineTextAlignment(.center)
+                    .font(.appCaption)
+                    .foregroundColor(.white.opacity(0.7))
+
+                    Button("Redeem Code") {
+                        handleRedeemCode()
                     }
+                    .font(.appCaption)
+                    .foregroundColor(.white.opacity(0.7))
+
+                    Button("Restore") {
+                        handleRestore()
+                    }
+                    .font(.appCaption)
+                    .foregroundColor(.white.opacity(0.7))
                 }
                 .padding(.bottom, 40)
             }
@@ -193,8 +209,24 @@ struct PaywallView: View {
         .onAppear {
             revenueCat.loadOfferings()
         }
+        .alert("Restore Purchases", isPresented: $showRestoreAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text(restoreAlertMessage)
+        }
     }
-    
+
+    private func handleRestore() {
+        revenueCat.restorePurchases { success, message in
+            restoreAlertMessage = message
+            showRestoreAlert = true
+        }
+    }
+
+    private func handleRedeemCode() {
+        Purchases.shared.presentCodeRedemptionSheet()
+    }
+
     private func formatMonthlyPrice(from package: Package) -> String {
         let yearlyPrice = package.storeProduct.price as NSDecimalNumber
         let monthlyPrice = yearlyPrice.dividing(by: NSDecimalNumber(value: 12))
@@ -246,34 +278,36 @@ struct SubscriptionPlanCard: View {
     var body: some View {
         Button(action: onTap) {
             HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    HStack {
-                        Text(title)
-                            .font(.appHeadline)
+                HStack {
+                    Text(title)
+                        .font(.appHeadline)
+                        .foregroundColor(.white)
+
+                    if let badge = badge {
+                        Text(badge)
+                            .font(.appCaption)
                             .foregroundColor(.white)
-                        
-                        if let badge = badge {
-                            Text(badge)
-                                .font(.appCaption)
-                                .foregroundColor(.white)
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 2)
-                                .background(Color.orange)
-                                .cornerRadius(4)
-                        }
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 2)
+                            .background(Color.orange)
+                            .cornerRadius(4)
                     }
-                    
-                    Text(priceDetail)
-                        .font(.appSubheadline)
-                        .foregroundColor(.white.opacity(0.7))
                 }
-                
+
                 Spacer()
-                
-                Text(price)
-                    .font(.appTitle)
-                    .foregroundColor(.white)
-                
+
+                VStack(alignment: .trailing, spacing: 2) {
+                    Text(price)
+                        .font(.appHeadline)
+                        .foregroundColor(.white)
+
+                    if !priceDetail.isEmpty {
+                        Text(priceDetail)
+                            .font(.appCaption)
+                            .foregroundColor(.white.opacity(0.6))
+                    }
+                }
+
                 Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
                     .font(.title2)
                     .foregroundColor(isSelected ? .white : .white.opacity(0.5))

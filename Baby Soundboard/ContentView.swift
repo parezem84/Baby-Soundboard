@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SuperwallKit
 
 extension Font {
     static func quicksand(_ weight: QuicksandWeight, size: CGFloat) -> Font {
@@ -73,7 +74,6 @@ struct ContentView: View {
     @StateObject private var soundPlayer = SoundPlayer()
     @StateObject private var revenueCat = RevenueCatManager.shared
     @State private var showingSettings = false
-    @State private var showingPaywall = false
     @State private var isOnboardingComplete = UserDefaults.standard.bool(forKey: "hasCompletedOnboarding")
     @AppStorage("defaultVolume") private var defaultVolume: Double = 20
     
@@ -118,69 +118,68 @@ struct ContentView: View {
     }
     
     private var mainAppView: some View {
-        NavigationView {
-            ZStack {
-                VStack(spacing: 0) {
-                    VStack(spacing: 12) {
-                        ZStack {
-                            Text("MoonNest")
-                                .font(.appLargeTitle)
-                                .foregroundColor(.white)
+        ZStack {
+            VStack(spacing: 0) {
+                VStack(spacing: 12) {
+                    ZStack {
+                        Text("MoonNest")
+                            .font(.appLargeTitle)
+                            .foregroundColor(.white)
+
+                        HStack {
+                            Button(action: {
+                                showingSettings = true
+                            }) {
+                                Image(systemName: "gearshape.fill")
+                                    .font(.title2)
+                                    .foregroundColor(.white)
+                            }
+                            .padding(.leading, 16)
                             
-                            HStack {
+                            Spacer()
+                            
+                            // Upgrade button (enabled for v1.1)
+                            if !revenueCat.isPremium {
                                 Button(action: {
-                                    showingSettings = true
+                                    Superwall.shared.register(placement: "premium_unlock")
                                 }) {
-                                    Image(systemName: "gearshape.fill")
-                                        .font(.title2)
-                                        .foregroundColor(.white)
-                                }
-                                .padding(.leading, 16)
-                                
-                                Spacer()
-                                
-                                // Upgrade button (enabled for v1.1)
-                                if !revenueCat.isPremium {
-                                    Button(action: {
-                                        showingPaywall = true
-                                    }) {
-                                        HStack(spacing: 4) {
-                                            Image(systemName: "crown.fill")
-                                                .font(.system(size: 14))
-                                            Text("Upgrade")
-                                                .font(.appCaption)
-                                        }
-                                        .foregroundColor(.white)
-                                        .padding(.horizontal, 12)
-                                        .padding(.vertical, 6)
-                                        .background(
-                                            RoundedRectangle(cornerRadius: 16)
-                                                .fill(Color.orange)
-                                        )
+                                    HStack(spacing: 4) {
+                                        Image(systemName: "crown.fill")
+                                            .font(.system(size: 14))
+                                        Text("Upgrade")
+                                            .font(.appCaption)
                                     }
-                                    .padding(.trailing, 16)
+                                    .foregroundColor(.white)
+                                    .padding(.horizontal, 12)
+                                    .padding(.vertical, 6)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 16)
+                                            .fill(Color.orange)
+                                    )
                                 }
+                                .padding(.trailing, 16)
+                            }
                             }
                         }
                         
                         // Timer countdown display
                         if soundPlayer.timerActive {
                             HStack {
-                                Image(systemName: "timer")
-                                    .foregroundColor(.white)
-                                Text("Stops playing \(getSoundDisplayName(soundPlayer.currentSound ?? "")) in \(soundPlayer.formattedTimeRemaining)")
-                                    .font(.appSubheadline)
-                                    .foregroundColor(.white)
-                                Spacer()
-                                Button("Cancel Timer") {
-                                    soundPlayer.cancelTimer()
-                                }
-                                .font(.appCaption)
-                                .foregroundColor(.white.opacity(0.8))
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 4)
-                                .background(Color.white.opacity(0.2))
-                                .cornerRadius(8)
+                            Image(systemName: "timer")
+                                .foregroundColor(.white)
+                            Text("Stops playing \(getSoundDisplayName(soundPlayer.currentSound ?? "")) in \(soundPlayer.formattedTimeRemaining)")
+                                .font(.appSubheadline)
+                                .foregroundColor(.white)
+                            Spacer()
+                            Button("Cancel Timer") {
+                                soundPlayer.cancelTimer()
+                            }
+                            .font(.appCaption)
+                            .foregroundColor(.white.opacity(0.8))
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(Color.white.opacity(0.2))
+                            .cornerRadius(8)
                             }
                             .padding(.horizontal, 16)
                             .padding(.vertical, 8)
@@ -203,7 +202,9 @@ struct ContentView: View {
                                     isPremium: !revenueCat.isPremium && revenueCat.isSoundPremium(sound.0, allSounds: sounds)
                                 ) {
                                     if !revenueCat.isPremium && revenueCat.isSoundPremium(sound.0, allSounds: sounds) {
-                                        showingPaywall = true
+                                        Superwall.shared.register(placement: "premium_unlock") {
+                                            soundPlayer.toggleSound(sound.0)
+                                        }
                                     } else {
                                         soundPlayer.toggleSound(sound.0)
                                     }
@@ -260,7 +261,7 @@ struct ContentView: View {
                                         }
                                     } else {
                                         Button("Upgrade to Premium") {
-                                            showingPaywall = true
+                                            Superwall.shared.register(placement: "premium_unlock")
                                         }
                                     }
                                 } label: {
@@ -309,19 +310,14 @@ struct ContentView: View {
                     startPoint: .top,
                     endPoint: .bottom
                 )
+                .ignoresSafeArea()
             )
-            .navigationBarHidden(true)
             .sheet(isPresented: $showingSettings) {
                 SettingsView(soundPlayer: soundPlayer)
-            }
-            // Paywall sheet (enabled for v1.1)
-            .sheet(isPresented: $showingPaywall) {
-                PaywallView()
             }
             .onAppear {
                 soundPlayer.setVolume(defaultVolume / 100.0)
             }
-        }
     }
 }
 

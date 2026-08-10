@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B1B83FEEC220BA189A91C1D /* SuperwallKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3599F5E20660EC7CEB924C13 /* SuperwallKit */; };
 		85A639D22EB38F86007A2A50 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 85A639D12EB38F86007A2A50 /* RevenueCat */; };
 		85BCB35B2E1FF0B8002BD7BF /* Quicksand-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85BCB3592E1FF0B8002BD7BF /* Quicksand-Regular.ttf */; };
 		85BCB35C2E1FF0B8002BD7BF /* Quicksand-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85BCB3562E1FF0B8002BD7BF /* Quicksand-Bold.ttf */; };
@@ -95,6 +96,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				85A639D22EB38F86007A2A50 /* RevenueCat in Frameworks */,
+				1B1B83FEEC220BA189A91C1D /* SuperwallKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,6 +173,7 @@
 			name = MoonNest;
 			packageProductDependencies = (
 				85A639D12EB38F86007A2A50 /* RevenueCat */,
+				3599F5E20660EC7CEB924C13 /* SuperwallKit */,
 			);
 			productName = "Baby Soundboard";
 			productReference = 8562B33D2E1BF5D10034EFBB /* MoonNest.app */;
@@ -256,6 +259,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				85A639CF2EB38DD0007A2A50 /* XCRemoteSwiftPackageReference "purchases-ios" */,
+				04FF21E771E6E708E6894730 /* XCRemoteSwiftPackageReference "Superwall-iOS" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8562B33E2E1BF5D10034EFBB /* Products */;
@@ -476,7 +480,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = 54Z3WMNQ78;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -490,7 +494,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.parezem.Baby-Soundboard";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -505,7 +509,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = 54Z3WMNQ78;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -519,7 +523,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.parezem.Baby-Soundboard";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -533,11 +537,11 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = 54Z3WMNQ78;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.parezem.Baby-SoundboardTests";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = "moonnest-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -553,11 +557,11 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = 54Z3WMNQ78;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.parezem.Baby-SoundboardTests";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = "moonnest-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -572,9 +576,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 7;
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.parezem.Baby-SoundboardUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -588,9 +592,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 7;
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.parezem.Baby-SoundboardUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -642,6 +646,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		04FF21E771E6E708E6894730 /* XCRemoteSwiftPackageReference "Superwall-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/superwall/Superwall-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 		85A639CF2EB38DD0007A2A50 /* XCRemoteSwiftPackageReference "purchases-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RevenueCat/purchases-ios";
@@ -653,6 +665,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3599F5E20660EC7CEB924C13 /* SuperwallKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04FF21E771E6E708E6894730 /* XCRemoteSwiftPackageReference "Superwall-iOS" */;
+			productName = SuperwallKit;
+		};
 		85A639D12EB38F86007A2A50 /* RevenueCat */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 85A639CF2EB38DD0007A2A50 /* XCRemoteSwiftPackageReference "purchases-ios" */;
